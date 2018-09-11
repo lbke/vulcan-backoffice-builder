@@ -1,5 +1,5 @@
 Package.describe({
-  name: "collection-admin"
+  name: "vulcan:backoffice-builder"
 });
 
 Package.onUse(api => {

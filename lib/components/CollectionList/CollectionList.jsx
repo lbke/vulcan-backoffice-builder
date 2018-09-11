@@ -133,7 +133,8 @@ CollectionList.contextTypes = {
 };
 
 export default CollectionList;
-registerComponent("CollectionList", CollectionList, withCurrentUser, [
-  withStyles,
-  styles
-]);
+registerComponent({
+  name: "CollectionList",
+  component: CollectionList,
+  hocs: [withCurrentUser, [withStyles, styles]]
+});
