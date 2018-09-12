@@ -113,7 +113,9 @@ export const CollectionItemForm = (
             }
             toast.success(
               intl.formatMessage({
-                id: "collectionAdmin.collectionItemForm.updated"
+                id: documentId
+                  ? "collectionAdmin.collectionItemForm.updated"
+                  : "collectionAdmin.CollectionItemForm.created"
               })
             );
             // close the modal on edit mode
