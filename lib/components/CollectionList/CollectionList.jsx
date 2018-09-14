@@ -51,15 +51,16 @@ const getDefaultColumns = (collection, currentUser) => {
 
   return validColumns;
 };
+//<FormattedMessage id="collectionAdmin.collectionList.no_data" />
 
 export const CollectionList = (
   {
-    results = [],
+    //results = [],
     currentUser,
-    loading,
+    //loading,
     collection,
     options,
-    terms = {},
+    getOptions,
     sort,
     baseRoute, // eg /customers
     newRoute = "/new", // relative to the baseRoute,
@@ -72,80 +73,68 @@ export const CollectionList = (
     customColumns = [], // already customized columns
     customActions = [], // user defined actions
     check,
-
     classes
   },
   { intl }
 ) => (
-  <div>
-    <Grid container className={classes.headerWrapper}>
-      <Grid item sm={6} xs={12}>
-        <Typography variant="title" color="inherit" className="tagline">
-          {headerText ||
-            (headerTextToken && <FormattedMessage id={headerTextToken} />) ||
-            collection.typeName ||
-            collection.options.collectionName}
-        </Typography>
-      </Grid>
-      {collection.options.mutations.new.check(currentUser) && (
-        <Grid item sm={6} xs={12} className={classes.addButtonWrapper}>
-          <Components.Button
-            component={Link}
-            to={getNewRoute(collection)}
-            variant="contained"
-            color="secondary"
-          >
-            <PlusIcon />
-            {addText || (
-              <FormattedMessage
-                id={addTextToken || "collectionAdmin.default.add"}
-              />
-            )}
-          </Components.Button>
+    <div>
+      <Grid container className={classes.headerWrapper}>
+        <Grid item sm={6} xs={12}>
+          <Typography variant="title" color="inherit" className="tagline">
+            {headerText ||
+              (headerTextToken && <FormattedMessage id={headerTextToken} />) ||
+              collection.typeName ||
+              collection.options.collectionName}
+          </Typography>
         </Grid>
-      )}
-    </Grid>
-    <Grid item md={12}>
-      {loading ? (
-        <Loading />
-      ) : (
+        {collection.options.mutations.new.check(currentUser) && (
+          <Grid item sm={6} xs={12} className={classes.addButtonWrapper}>
+            <Components.Button
+              component={Link}
+              to={getNewRoute(collection)}
+              variant="contained"
+              color="secondary"
+            >
+              <PlusIcon />
+              {addText || (
+                <FormattedMessage
+                  id={addTextToken || "collectionAdmin.default.add"}
+                />
+              )}
+            </Components.Button>
+          </Grid>
+        )}
+      </Grid>
+      <Grid item md={12}>
         <div className={classes.datatableWrapper}>
-          {results.length ? (
-            <div>
-              <Components.Datatable
-                collection={collection}
-                options={options}
-                terms={terms}
-                showEdit={false}
-                sort={sort}
-                columns={[
-                  buildActionsColumn({
-                    name: intl.formatMessage({
-                      id: "collectionAdmin.collectionList.actions"
-                    }),
-                    collection,
-                    editRoute,
-                    baseRoute,
-                    customActions,
-                    currentUser
-                  }),
-                  // generate the default columns for non specific columns
-                  ...buildDefaultColumns(
-                    collection.options.schema,
-                    basicColumns || getDefaultColumns(collection, currentUser)
-                  ),
-                  ...customColumns
-                ]}
-              />
-            </div>
-          ) : (
-            <FormattedMessage id="collectionAdmin.collectionList.no_data" />
-          )}
+          <Components.Datatable
+            collection={collection}
+            options={options || getOptions && getOptions(currentUser)}
+            showEdit={false}
+            sort={sort}
+            columns={[
+              buildActionsColumn({
+                name: intl.formatMessage({
+                  id: "collectionAdmin.collectionList.actions"
+                }),
+                collection,
+                editRoute,
+                baseRoute,
+                customActions,
+                currentUser
+              }),
+              // generate the default columns for non specific columns
+              ...buildDefaultColumns(
+                collection.options.schema,
+                basicColumns || getDefaultColumns(collection, currentUser)
+              ),
+              ...customColumns
+            ]}
+          />
         </div>
-      )}
-    </Grid>
-  </div>
-);
+      </Grid>
+    </div>
+  );
 CollectionList.contextTypes = {
   intl: intlShape
 };
