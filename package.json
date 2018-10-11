@@ -7,7 +7,8 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run test-unit",
+    "test-unit": "TEST_WATCH=1 meteor test-packages ./ --port 3002 --driver-package meteortesting:mocha --raw-logs"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/lbke/vulcan-backoffice-builder/issues"
   },
-  "homepage": "https://github.com/lbke/vulcan-backoffice-builder#readme"
+  "homepage": "https://github.com/lbke/vulcan-backoffice-builder#readme",
+  "devDependencies": {
+    "expect": "^23.6.0"
+  }
 }

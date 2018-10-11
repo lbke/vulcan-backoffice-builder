@@ -21,6 +21,7 @@ import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router";
 
 import { getCollectionDisplayName } from "../modules/namingHelpers";
+import injectParams from "../modules/injectParams";
 
 import withStyles from "@material-ui/core/styles/withStyles";
 
@@ -36,8 +37,8 @@ const CollectionItemDetails = ({
   loading,
   document,
   currentUser,
-  baseRoute,
-  editRoute = "/edit",
+  basePath,
+  editPath = "/edit",
   collection,
 
   editText,
@@ -65,7 +66,7 @@ const CollectionItemDetails = ({
           <Grid item sm={6} xs={12} className={classes.addButtonWrapper}>
             <Components.Button
               component={Link}
-              to={`${baseRoute}/${document._id}${editRoute}`}
+              to={injectParams(editPath, { documentId: document._id })}
               variant="contained"
               color="secondary"
             >
@@ -81,7 +82,7 @@ const CollectionItemDetails = ({
       </Grid>
       <div>
         <Components.Card
-          canEdit={false}
+          canUpdate={false}
           collection={collection}
           document={document}
           currentUser={currentUser}

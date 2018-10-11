@@ -40,7 +40,7 @@ export const CollectionItemForm = (
     queryFragment,
     closeModal,
     router,
-    baseRoute,
+    basePath,
     fields,
     headerText,
 
@@ -115,7 +115,7 @@ export const CollectionItemForm = (
               intl.formatMessage({
                 id: documentId
                   ? "collectionAdmin.collectionItemForm.updated"
-                  : "collectionAdmin.CollectionItemForm.created"
+                  : "collectionAdmin.collectionItemForm.created"
               })
             );
             // close the modal on edit mode
