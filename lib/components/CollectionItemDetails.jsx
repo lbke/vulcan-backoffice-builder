@@ -82,7 +82,7 @@ const CollectionItemDetails = ({
       </Grid>
       <div>
         <Components.Card
-          canEdit={false}
+          canUpdate={false}
           collection={collection}
           document={document}
           currentUser={currentUser}
