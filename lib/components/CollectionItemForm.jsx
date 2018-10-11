@@ -52,85 +52,85 @@ export const CollectionItemForm = (
   },
   { intl }
 ) => (
-    <div>
-      <Grid container className={classes.headerWrapper}>
-        <Grid item sm={6} xs={12}>
-          <Typography variant="title" color="inherit" className="tagline">
-            {headerText || (
-              <span>
-                <FormattedMessage
-                  id={`collectionAdmin.default.${documentId ? "edit" : "new"}`}
-                />
-                {` ${collection.typeName}`}
-              </span>
-            )}
-          </Typography>
-        </Grid>
-        <Grid item sm={6} xs={12} className={classes.addButtonWrapper}>
-          <Components.Button
-            onClick={() => browserHistory.goBack()}
-            variant="contained"
-            color="secondary"
-          >
-            <ArrowLeftBoldIcon />
-            <FormattedMessage id="collectionAdmin.default.go_back" />
-          </Components.Button>
-        </Grid>
+  <div>
+    <Grid container className={classes.headerWrapper}>
+      <Grid item sm={6} xs={12}>
+        <Typography variant="title" color="inherit" className="tagline">
+          {headerText || (
+            <span>
+              <FormattedMessage
+                id={`collectionAdmin.default.${documentId ? "edit" : "new"}`}
+              />
+              {` ${collection.typeName}`}
+            </span>
+          )}
+        </Typography>
       </Grid>
-      {(documentId || collection.options.mutations.new.check(currentUser)) && (
-        <div>
-          <Components.SmartForm
-            collection={collection}
-            mutationFragment={
-              mutationFragment ? getFragment(mutationFragment) : undefined
+      <Grid item sm={6} xs={12} className={classes.addButtonWrapper}>
+        <Components.Button
+          onClick={() => browserHistory.goBack()}
+          variant="contained"
+          color="secondary"
+        >
+          <ArrowLeftBoldIcon />
+          <FormattedMessage id="collectionAdmin.default.go_back" />
+        </Components.Button>
+      </Grid>
+    </Grid>
+    {(documentId || collection.options.mutations.new.check(currentUser)) && (
+      <div>
+        <Components.SmartForm
+          collection={collection}
+          mutationFragment={
+            mutationFragment ? getFragment(mutationFragment) : undefined
+          }
+          queryFragment={queryFragment ? getFragment(queryFragment) : undefined}
+          fields={fields ? fields : undefined}
+          /* for edition */
+          documentId={documentId}
+          showRemove={!!documentId}
+          errorCallback={(document, error) => {
+            toast.error(
+              intl.formatMessage({
+                id: "collectionAdmin.collectionItemForm.error"
+              })
+            );
+          }}
+          removeSuccessCallback={document => {
+            toast.success(
+              intl.formatMessage({
+                id: "collectionAdmin.collectionItemForm.deleted"
+              })
+            );
+            if (closeModal) {
+              closeModal();
             }
-            queryFragment={queryFragment ? getFragment(queryFragment) : undefined}
-            fields={fields ? fields : undefined}
-            /* for edition */
-            documentId={documentId}
-            showRemove={!!documentId}
-            errorCallback={(document, error) => {
-              toast.error(
-                intl.formatMessage({
-                  id: "collectionAdmin.collectionItemForm.error"
-                })
-              );
-            }}
-            removeSuccessCallback={document => {
-              toast.success(
-                intl.formatMessage({
-                  id: "collectionAdmin.collectionItemForm.deleted"
-                })
-              );
-              if (closeModal) {
-                closeModal();
-              }
-            }}
-            submitCallback={submitCallback || undefined}
-            successCallback={document => {
-              if (successCallback) {
-                successCallback(document);
-              }
-              toast.success(
-                intl.formatMessage({
-                  id: documentId
-                    ? "collectionAdmin.collectionItemForm.updated"
-                    : "collectionAdmin.CollectionItemForm.created"
-                })
-              );
-              // close the modal on edit mode
-              if (closeModal) {
-                closeModal();
-              }
-              // go back to the previous page
-              browserHistory.goBack();
-            }}
-            {...otherProps}
-          />
-        </div>
-      )}
-    </div>
-  );
+          }}
+          submitCallback={submitCallback || undefined}
+          successCallback={document => {
+            if (successCallback) {
+              successCallback(document);
+            }
+            toast.success(
+              intl.formatMessage({
+                id: documentId
+                  ? "collectionAdmin.collectionItemForm.updated"
+                  : "collectionAdmin.collectionItemForm.created"
+              })
+            );
+            // close the modal on edit mode
+            if (closeModal) {
+              closeModal();
+            }
+            // go back to the previous page
+            browserHistory.goBack();
+          }}
+          {...otherProps}
+        />
+      </div>
+    )}
+  </div>
+);
 
 CollectionItemForm.contextTypes = {
   intl: intlShape
