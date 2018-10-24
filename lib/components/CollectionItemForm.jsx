@@ -59,7 +59,11 @@ export const CollectionItemForm = (
       <Grid item sm={6} xs={12}>
         <Typography variant="title" color="inherit" className="tagline">
           {headerText ||
-            (headerTextToken && <FormattedMessage id={headerTextToken} />) || (
+            (headerTextToken && (
+              <FormattedMessage
+                id={headerTextToken + (documentId ? ".edit" : ".new")}
+              />
+            )) || (
               <span>
                 <FormattedMessage
                   id={`collectionAdmin.default.${documentId ? "edit" : "new"}`}
