@@ -19,6 +19,7 @@ import Grid from "@material-ui/core/Grid";
 import ArrowLeftBoldIcon from "mdi-material-ui/ArrowLeftBold";
 import { Link, browserHistory } from "react-router";
 import { FormattedMessage, intlShape } from "meteor/vulcan:i18n";
+import PropTypes from "prop-types";
 
 import withStyles from "@material-ui/core/styles/withStyles";
 
@@ -43,6 +44,7 @@ export const CollectionItemForm = (
     basePath,
     fields,
     headerText,
+    headerTextToken,
 
     submitCallback,
     successCallback,
@@ -56,14 +58,15 @@ export const CollectionItemForm = (
     <Grid container className={classes.headerWrapper}>
       <Grid item sm={6} xs={12}>
         <Typography variant="title" color="inherit" className="tagline">
-          {headerText || (
-            <span>
-              <FormattedMessage
-                id={`collectionAdmin.default.${documentId ? "edit" : "new"}`}
-              />
-              {` ${collection.typeName}`}
-            </span>
-          )}
+          {headerText ||
+            (headerTextToken && <FormattedMessage id={headerTextToken} />) || (
+              <span>
+                <FormattedMessage
+                  id={`collectionAdmin.default.${documentId ? "edit" : "new"}`}
+                />
+                {` ${collection.typeName}`}
+              </span>
+            )}
         </Typography>
       </Grid>
       <Grid item sm={6} xs={12} className={classes.addButtonWrapper}>
@@ -134,6 +137,10 @@ export const CollectionItemForm = (
 
 CollectionItemForm.contextTypes = {
   intl: intlShape
+};
+CollectionItemForm.propTypes = {
+  headerText: PropTypes.string,
+  headerTextToken: PropTypes.string
 };
 export default CollectionItemForm;
 registerComponent("CollectionItemForm", CollectionItemForm, withCurrentUser, [
