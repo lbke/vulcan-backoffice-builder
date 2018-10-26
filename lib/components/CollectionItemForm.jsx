@@ -49,6 +49,8 @@ export const CollectionItemForm = (
     submitCallback,
     successCallback,
 
+    showReturnButton = true,
+
     classes,
     ...otherProps
   },
@@ -56,7 +58,7 @@ export const CollectionItemForm = (
 ) => (
   <div>
     <Grid container className={classes.headerWrapper}>
-      <Grid item sm={6} xs={12}>
+      <Grid item sm={showReturnButton ? 6 : 12} xs={12}>
         <Typography variant="title" color="inherit" className="tagline">
           {headerText ||
             (headerTextToken && (
@@ -73,16 +75,18 @@ export const CollectionItemForm = (
             )}
         </Typography>
       </Grid>
-      <Grid item sm={6} xs={12} className={classes.addButtonWrapper}>
-        <Components.Button
-          onClick={() => browserHistory.goBack()}
-          variant="contained"
-          color="secondary"
-        >
-          <ArrowLeftBoldIcon />
-          <FormattedMessage id="collectionAdmin.default.go_back" />
-        </Components.Button>
-      </Grid>
+      {showReturnButton && (
+        <Grid item sm={6} xs={12} className={classes.addButtonWrapper}>
+          <Components.Button
+            onClick={() => browserHistory.goBack()}
+            variant="contained"
+            color="secondary"
+          >
+            <ArrowLeftBoldIcon />
+            <FormattedMessage id="collectionAdmin.default.go_back" />
+          </Components.Button>
+        </Grid>
+      )}
     </Grid>
     {(documentId || collection.options.mutations.new.check(currentUser)) && (
       <div>
