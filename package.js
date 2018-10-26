@@ -6,6 +6,7 @@ Package.onUse(api => {
   api.use([
     "vulcan:core",
     "erikdakoda:vulcan-material-ui",
+    "vulcan:more-helpers",
     "vulcan:i18n",
     "vulcan:menu"
   ]);
