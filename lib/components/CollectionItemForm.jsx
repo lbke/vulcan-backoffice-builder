@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import { getCollectionDisplayName } from "../modules/namingHelpers";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+import NoSsr from "@material-ui/core/NoSsr";
 import ArrowLeftBoldIcon from "mdi-material-ui/ArrowLeftBold";
 import { Link, browserHistory } from "react-router";
 import { FormattedMessage, intlShape } from "meteor/vulcan:i18n";
@@ -90,54 +91,58 @@ export const CollectionItemForm = (
     </Grid>
     {(documentId || collection.options.mutations.new.check(currentUser)) && (
       <div>
-        <Components.SmartForm
-          collection={collection}
-          mutationFragment={
-            mutationFragment ? getFragment(mutationFragment) : undefined
-          }
-          queryFragment={queryFragment ? getFragment(queryFragment) : undefined}
-          fields={fields ? fields : undefined}
-          /* for edition */
-          documentId={documentId}
-          showRemove={!!documentId}
-          errorCallback={(document, error) => {
-            toast.error(
-              intl.formatMessage({
-                id: "collectionAdmin.collectionItemForm.error"
-              })
-            );
-          }}
-          removeSuccessCallback={document => {
-            toast.success(
-              intl.formatMessage({
-                id: "collectionAdmin.collectionItemForm.deleted"
-              })
-            );
-            if (closeModal) {
-              closeModal();
+        <NoSsr>
+          <Components.SmartForm
+            collection={collection}
+            mutationFragment={
+              mutationFragment ? getFragment(mutationFragment) : undefined
             }
-          }}
-          submitCallback={submitCallback || undefined}
-          successCallback={document => {
-            if (successCallback) {
-              successCallback(document);
+            queryFragment={
+              queryFragment ? getFragment(queryFragment) : undefined
             }
-            toast.success(
-              intl.formatMessage({
-                id: documentId
-                  ? "collectionAdmin.collectionItemForm.updated"
-                  : "collectionAdmin.collectionItemForm.created"
-              })
-            );
-            // close the modal on edit mode
-            if (closeModal) {
-              closeModal();
-            }
-            // go back to the previous page
-            browserHistory.goBack();
-          }}
-          {...otherProps}
-        />
+            fields={fields ? fields : undefined}
+            /* for edition */
+            documentId={documentId}
+            showRemove={!!documentId}
+            errorCallback={(document, error) => {
+              toast.error(
+                intl.formatMessage({
+                  id: "collectionAdmin.collectionItemForm.error"
+                })
+              );
+            }}
+            removeSuccessCallback={document => {
+              toast.success(
+                intl.formatMessage({
+                  id: "collectionAdmin.collectionItemForm.deleted"
+                })
+              );
+              if (closeModal) {
+                closeModal();
+              }
+            }}
+            submitCallback={submitCallback || undefined}
+            successCallback={document => {
+              if (successCallback) {
+                successCallback(document);
+              }
+              toast.success(
+                intl.formatMessage({
+                  id: documentId
+                    ? "collectionAdmin.collectionItemForm.updated"
+                    : "collectionAdmin.collectionItemForm.created"
+                })
+              );
+              // close the modal on edit mode
+              if (closeModal) {
+                closeModal();
+              }
+              // go back to the previous page
+              browserHistory.goBack();
+            }}
+            {...otherProps}
+          />
+        </NoSsr>
       </div>
     )}
   </div>
