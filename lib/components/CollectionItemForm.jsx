@@ -18,7 +18,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import NoSsr from "@material-ui/core/NoSsr";
 import ArrowLeftBoldIcon from "mdi-material-ui/ArrowLeftBold";
-import { Link, browserHistory } from "react-router";
+import { Link, browserHistory, withRouter } from "react-router";
 import { FormattedMessage, intlShape } from "meteor/vulcan:i18n";
 import PropTypes from "prop-types";
 
@@ -41,7 +41,6 @@ export const CollectionItemForm = (
     mutationFragment,
     queryFragment,
     closeModal,
-    router,
     basePath,
     fields,
     headerText,
@@ -53,6 +52,9 @@ export const CollectionItemForm = (
     showReturnButton = true,
 
     classes,
+
+    router,
+
     ...otherProps
   },
   { intl }
@@ -79,7 +81,7 @@ export const CollectionItemForm = (
       {showReturnButton && (
         <Grid item sm={6} xs={12} className={classes.addButtonWrapper}>
           <Components.Button
-            onClick={() => browserHistory.goBack()}
+            onClick={() => router.goBack()}
             variant="contained"
             color="secondary"
           >
@@ -138,7 +140,7 @@ export const CollectionItemForm = (
                 closeModal();
               }
               // go back to the previous page
-              browserHistory.goBack();
+              router.goBack();
             }}
             {...otherProps}
           />
@@ -156,7 +158,8 @@ CollectionItemForm.propTypes = {
   headerTextToken: PropTypes.string
 };
 export default CollectionItemForm;
-registerComponent("CollectionItemForm", CollectionItemForm, withCurrentUser, [
-  withStyles,
-  styles
-]);
+registerComponent({
+  name: "CollectionItemForm",
+  component: CollectionItemForm,
+  hocs: [withCurrentUser, withRouter, [withStyles, styles]]
+});
