@@ -53,6 +53,17 @@ const getDefaultColumns = (collection, currentUser) => {
 };
 //<FormattedMessage id="collectionAdmin.collectionList.no_data" />
 
+const setSortable = (sortableColumns, columns) => {
+  console.log(sortableColumns);
+  console.log(columns);
+  return columns.map(item => { 
+    if (sortableColumns.indexOf(item.name)>-1) {
+      item.sortable=true;
+    }
+    return item 
+  })
+}
+
 export const CollectionList = (
   {
     //results = [],
@@ -74,7 +85,9 @@ export const CollectionList = (
     customColumns = [], // already customized columns
     customActions = [], // user defined actions
     check,
-    classes
+    classes,
+    paginate,
+    sortableColumns = [],
   },
   { intl }
 ) => (
@@ -88,6 +101,7 @@ export const CollectionList = (
             collection.options.collectionName}
         </Typography>
       </Grid>
+      {/*
       {collection.options.mutations.new.check(currentUser) && (
         <Grid item sm={6} xs={12} className={classes.addButtonWrapper}>
           <Components.Button
@@ -105,6 +119,7 @@ export const CollectionList = (
           </Components.Button>
         </Grid>
       )}
+      */}
     </Grid>
     <Grid item md={12}>
       <div className={classes.datatableWrapper}>
@@ -114,7 +129,7 @@ export const CollectionList = (
           showEdit={false}
           sort={sort}
           dense="denser"
-          columns={[
+          columns={setSortable(sortableColumns, [
             buildActionsColumn({
               name: intl.formatMessage({
                 id: "collectionAdmin.collectionList.actions"
@@ -132,7 +147,8 @@ export const CollectionList = (
               basicColumns || getDefaultColumns(collection, currentUser)
             ),
             ...customColumns
-          ]}
+          ])}
+          paginate={paginate}
         />
       </div>
     </Grid>
