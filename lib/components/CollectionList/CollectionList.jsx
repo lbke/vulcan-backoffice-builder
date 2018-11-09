@@ -54,14 +54,8 @@ const getDefaultColumns = (collection, currentUser) => {
 //<FormattedMessage id="collectionAdmin.collectionList.no_data" />
 
 const setSortable = (sortableColumns, columns) => {
-  console.log(sortableColumns);
-  console.log(columns);
-  return columns.map(item => { 
-    if (sortableColumns.indexOf(item.name)>-1) {
-      item.sortable=true;
-    }
-    return item 
-  })
+  const sortableMap = sortableColumns.reduce((res, col) => ({ ...res, [col]: true }), {})
+  return  columns.map(item => (item.name in sortableMap ? {...item, sortable: true} : item));
 }
 
 export const CollectionList = (
