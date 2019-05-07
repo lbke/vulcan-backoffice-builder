@@ -11,14 +11,13 @@ import React from "react";
 import {
   registerComponent,
   Components,
-  Loading,
   withCurrentUser
 } from "meteor/vulcan:core";
 import { FormattedMessage, intlShape } from "meteor/vulcan:i18n";
 import PencilIcon from "mdi-material-ui/Pencil";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 import { getCollectionDisplayName } from "../modules/namingHelpers";
 import injectParams from "../modules/injectParams";
@@ -51,7 +50,7 @@ const CollectionItemDetails = ({
   classes
 }) => {
   return loading ? (
-    <Loading />
+    <Components.Loading />
   ) : (
     <div>
       <Grid container className={classes.headerWrapper}>
