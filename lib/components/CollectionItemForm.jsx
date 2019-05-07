@@ -53,7 +53,7 @@ export const CollectionItemForm = (
 
     classes,
 
-    router,
+    history,
 
     ...otherProps
   },
@@ -81,7 +81,7 @@ export const CollectionItemForm = (
       {showReturnButton && (
         <Grid item sm={6} xs={12} className={classes.addButtonWrapper}>
           <Components.Button
-            onClick={() => router.goBack()}
+            onClick={() => history.goBack()}
             variant="contained"
             color="secondary"
           >
@@ -140,7 +140,7 @@ export const CollectionItemForm = (
                 closeModal();
               }
               // go back to the previous page
-              router.goBack();
+              history.goBack();
             }}
             {...otherProps}
           />
@@ -155,7 +155,8 @@ CollectionItemForm.contextTypes = {
 };
 CollectionItemForm.propTypes = {
   headerText: PropTypes.string,
-  headerTextToken: PropTypes.string
+  headerTextToken: PropTypes.string,
+  history: PropTypes.object.isRequired,
 };
 export default CollectionItemForm;
 registerComponent({
