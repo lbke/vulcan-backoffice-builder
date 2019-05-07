@@ -13,7 +13,7 @@ import {
 } from "meteor/vulcan:core";
 import { FormattedMessage, intlShape } from "meteor/vulcan:i18n";
 import Users from "meteor/vulcan:users";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import PlusIcon from "mdi-material-ui/Plus";
 
 import Typography from "@material-ui/core/Typography";
