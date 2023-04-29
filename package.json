@@ -25,6 +25,6 @@
   },
   "homepage": "https://github.com/lbke/vulcan-backoffice-builder#readme",
   "devDependencies": {
-    "expect": "^23.6.0"
+    "expect": "^29.5.0"
   }
 }
